@@ -1,0 +1,13 @@
+{
+  "name": "sawtchat-backend",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": { "start": "node server.js" },
+  "dependencies": {
+    "@livekit/rtc-node": "^0.13.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "livekit-server-sdk": "^2.9.0"
+  }
+}
