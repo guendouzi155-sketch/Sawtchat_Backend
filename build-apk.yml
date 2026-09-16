@@ -1,0 +1,38 @@
+name: Build SawtChat APK
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Prepare Flutter project
+        run: |
+          unzip -q sawtchat_ready_phone.zip -d package
+          cd package/flutter
+          flutter create --platforms=android --org com.sawtchat .
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Install dependencies
+        working-directory: package/flutter
+        run: flutter pub get
+
+      - name: Build APK
+        working-directory: package/flutter
+        run: flutter build apk --release
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: SawtChat-APK
+          path: package/flutter/build/app/outputs/flutter-apk/app-release.apk
